@@ -6,19 +6,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RadioGroup;
 
 import butterknife.ButterKnife;
 
-public class Main2Activity extends AppCompatActivity
+public class HealthMattersActivity extends AppCompatActivity
 {
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.health_matters);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         ButterKnife.bind(this);
 
@@ -43,7 +41,7 @@ public class Main2Activity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                Intent intent = new Intent(Main2Activity.this, MainActivity.class);
+                Intent intent = new Intent(HealthMattersActivity.this, PersonalDetailsActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -55,7 +53,7 @@ public class Main2Activity extends AppCompatActivity
                                        @Override
                                        public void onClick(View view)
                                        {
-                                           Intent intent = new Intent(Main2Activity.this, MapActivity.class);
+                                           Intent intent = new Intent(HealthMattersActivity.this, MapActivity.class);
                                            startActivity(intent);
                                            finish();
                                        }

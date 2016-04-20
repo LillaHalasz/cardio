@@ -1,6 +1,7 @@
 package hu.user.kardioapplication;
 
 import android.Manifest;
+import android.animation.Animator;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +9,7 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
@@ -15,6 +17,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -56,7 +59,7 @@ public class MapActivity extends FragmentActivity
     ArrayList<LatLng> plannedRoutePoints;
 
     private GoogleApiClient mGoogleApiClient;
-    public static final String TAG = MainActivity.class.getSimpleName();
+    public static final String TAG = PersonalDetailsActivity.class.getSimpleName();
     private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
     protected Location currentLocation;
     private LocationRequest mLocationRequest;
@@ -67,9 +70,11 @@ public class MapActivity extends FragmentActivity
 
     boolean isDrawRoute;
 
-    Polyline myRoute;
+    private Polyline myRoute;
 
-    TextView tvHeartRate;
+    private TextView tvHeartRate;
+    private ImageView img;
+    private MediaPlayer beat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -78,6 +83,8 @@ public class MapActivity extends FragmentActivity
         setContentView(R.layout.map);
 
         tvHeartRate = (TextView) findViewById(R.id.tv_hr);
+        img = (ImageView) findViewById(R.id.indicator);
+
 
         String path = Environment.getExternalStorageDirectory().toString() + "/qsch.gpx";
         File gpxFile = new File(path);
@@ -159,6 +166,7 @@ public class MapActivity extends FragmentActivity
             heartRate = intent.getIntExtra("heartRate", 0);
             Log.i("MapActivity", "" + heartRate);
             tvHeartRate.setText("" + heartRate);
+            pumpHeart();
 
         }
     };
@@ -296,5 +304,76 @@ public class MapActivity extends FragmentActivity
     {
 
     }
+
+    private void pumpHeart()
+    {
+        img.animate().scaleXBy(0.2f).scaleYBy(0.2f).setDuration(50).setListener(scaleUpListener);
+        //playBeat();
+    }
+
+    private Animator.AnimatorListener scaleDownListener = new Animator.AnimatorListener()
+    {
+
+        @Override
+        public void onAnimationStart(Animator animation)
+        {
+            // TODO Auto-generated method stub
+
+        }
+
+        @Override
+        public void onAnimationRepeat(Animator animation)
+        {
+            // TODO Auto-generated method stub
+
+        }
+
+        @Override
+        public void onAnimationEnd(Animator animation)
+        {
+            // img.animate().scaleXBy(0.2f).scaleYBy(0.2f).setDuration(100).setListener(scaleUpListener);
+        }
+
+        @Override
+        public void onAnimationCancel(Animator animation)
+        {
+            // TODO Auto-generated method stub
+
+        }
+    };
+
+    private Animator.AnimatorListener scaleUpListener = new Animator.AnimatorListener()
+    {
+
+        @Override
+        public void onAnimationStart(Animator animation)
+        {
+            // TODO Auto-generated method stub
+
+        }
+
+        @Override
+        public void onAnimationRepeat(Animator animation)
+        {
+            // TODO Auto-generated method stub
+
+        }
+
+        @Override
+        public void onAnimationEnd(Animator animation)
+        {
+            img.animate().scaleXBy(-0.2f).scaleYBy(-0.2f).setDuration(50).setListener(scaleDownListener);
+
+        }
+
+        @Override
+        public void onAnimationCancel(Animator animation)
+        {
+            // TODO Auto-generated method stub
+
+        }
+    };
+
+
 }
 

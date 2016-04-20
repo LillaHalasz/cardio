@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="bottom"
         android:layout_marginTop="7dp"
-        android:layout_weight="3"/>
+        android:layout_weight="1"/>
 
     <ToggleButton
         android:id="@+id/btn_start"
@@ -25,12 +25,45 @@
         android:textOff="START"
         android:textOn="STOP"/>
 
-    <TextView
-        android:id="@+id/tv_hr"
-        android:backgroundTint="@color/light_background"
-        android:layout_gravity="top|center_horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp">
+
+        <TextView
+            android:id="@+id/tv_hr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_centerVertical="true"
+            android:gravity="top|center"
+            android:includeFontPadding="false"
+            android:text="0"
+            android:textSize="90sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/indicator"
+            android:layout_alignBottom="@+id/indicator"
+            android:layout_centerHorizontal="true"
+            android:includeFontPadding="false"
+            android:text="bpm"
+            android:textSize="24sp"/>
+
+        <ImageView
+            android:id="@+id/indicator"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignEnd="@+id/textView"
+            android:layout_alignRight="@+id/textView"
+            android:layout_centerVertical="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/heart"/>
+    </RelativeLayout>
 
 </FrameLayout>
