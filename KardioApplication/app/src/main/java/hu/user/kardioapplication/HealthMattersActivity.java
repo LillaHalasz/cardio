@@ -53,7 +53,7 @@ public class HealthMattersActivity extends AppCompatActivity
                                        @Override
                                        public void onClick(View view)
                                        {
-                                           Intent intent = new Intent(HealthMattersActivity.this, MapActivity.class);
+                                           Intent intent = new Intent(HealthMattersActivity.this, WalkingScreenActivity.class);
                                            startActivity(intent);
                                            finish();
                                        }

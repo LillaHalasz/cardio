@@ -1,7 +1,6 @@
 package hu.user.kardioapplication;
 
 import android.Manifest;
-import android.animation.Animator;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -9,20 +8,18 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CompoundButton;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.ToggleButton;
 
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -49,41 +46,30 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 /**
- * Created by User on 2016.03.13..
+ * Created by User on 2016.04.20..
  */
-public class MapActivity extends FragmentActivity
+public class MapFragment extends Fragment
 {
     SupportMapFragment mapFragment;
     GoogleMap googleMap;
+
     ArrayList<LatLng> myRoutePoints;
     ArrayList<LatLng> plannedRoutePoints;
 
-    private GoogleApiClient mGoogleApiClient;
-    public static final String TAG = PersonalDetailsActivity.class.getSimpleName();
-    private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
-    protected Location currentLocation;
-    private LocationRequest mLocationRequest;
-    double currentLatitude;
-    double currentLongitude;
-
-
     boolean isDrawRoute;
-
     private Polyline myRoute;
-    int heartRate;
-    private TextView tvHeartRate;
-    private ImageView img;
-    private MediaPlayer beat;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
+    private double currentLatitude;
+    private double currentLongitude;
+
+    public MapFragment()
     {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.map);
+    }
 
-        tvHeartRate = (TextView) findViewById(R.id.tv_hr);
-        img = (ImageView) findViewById(R.id.indicator);
-
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
+        View view = inflater.inflate(R.layout.map, container, false);
+        Log.i("MapFragmnet", "before");
 
         String path = Environment.getExternalStorageDirectory().toString() + "/qsch.gpx";
         File gpxFile = new File(path);
@@ -97,12 +83,11 @@ public class MapActivity extends FragmentActivity
 
         }
 
-        setUpMapIfNeeded();
-
+        setUpMap();
 
         myRoutePoints = new ArrayList<>();
         isDrawRoute = false;
-        final ToggleButton startStop = (ToggleButton) findViewById(R.id.btn_start);
+        final ToggleButton startStop = (ToggleButton) view.findViewById(R.id.btn_start);
         startStop.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
         {
             @Override
@@ -112,77 +97,39 @@ public class MapActivity extends FragmentActivity
 
                 if (isChecked)
                 {
-                    Intent intent = new Intent(MapActivity.this, BackgroundLocationService.class);
-                    startService(intent);
+                    getActivity().startService(new Intent(getActivity(), BackgroundLocationService.class));
 
                     myRoutePoints.clear();
                     redrawMapLine();
-
-                    Intent intentHeartRate = new Intent(MapActivity.this, BackgroundPulseService.class);
-                    startService(intentHeartRate);
-
-
                 }
                 else
                 {
-                    Intent intent = new Intent(MapActivity.this, BackgroundLocationService.class);
-                    stopService(intent);
+                    getActivity().stopService(new Intent(getActivity(), BackgroundLocationService.class));
+                    getActivity().stopService(new Intent(getActivity(),BackgroundPulseService.class));
 
-                    Intent intentHeartRate = new Intent(MapActivity.this, BackgroundPulseService.class);
-                    stopService(intentHeartRate);
                 }
             }
         });
 
-        LocalBroadcastManager.getInstance(this).registerReceiver(locationUpdateReceiver, new IntentFilter("updateLocation"));
-        LocalBroadcastManager.getInstance(this).registerReceiver(heartRateUpdateReceiver, new IntentFilter("getHeartRate"));
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(locationUpdateReceiver, new IntentFilter("updateLocation"));
+        return view;
+        // return inflater.inflate(R.layout.map, container, false);
+
     }
 
-    private BroadcastReceiver locationUpdateReceiver = new BroadcastReceiver()
+    private void setUpMap()
     {
-        @Override
-        public void onReceive(Context context, Intent intent)
-        {
-            Log.i("MapActivity", "ReceiveLocation");
-
-            currentLatitude = intent.getDoubleExtra("latitude", 0);
-            currentLongitude = intent.getDoubleExtra("longitude", 0);
-            final LatLng latLng = new LatLng(currentLatitude, currentLongitude);
-            if (isDrawRoute)
-            {
-                myRoutePoints.add(latLng);
-                redrawMapLine();
-            }
-        }
-    };
-
-    private BroadcastReceiver heartRateUpdateReceiver = new BroadcastReceiver()
-    {
-        @Override
-        public void onReceive(Context context, Intent intent)
-        {
-            Log.i("MapActivity", "ReceiveHeartRate");
-            heartRate = intent.getIntExtra("heartRate", 0);
-            Log.i("MapActivity", "" + heartRate);
-            tvHeartRate.setText("" + heartRate);
-            pumpHeart();
-
-        }
-    };
-
-    private void setUpMapIfNeeded()
-    {
-        mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         if (mapFragment != null)
         {
-
+            Log.i("MapFragment", "first if");
             mapFragment.getMapAsync(new OnMapReadyCallback()
             {
                 @Override
                 public void onMapReady(GoogleMap map)
                 {
                     googleMap = map;
-                    if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+                    if (ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
                     {
                         // TODO: Consider calling
                         //    ActivityCompat#requestPermissions
@@ -195,13 +142,13 @@ public class MapActivity extends FragmentActivity
                     }
                     googleMap.setMyLocationEnabled(true);
                     googleMap.getUiSettings().isZoomControlsEnabled();
-                    setUpMap();
+                    setPolylineOnMap();
                 }
             });
         }
     }
 
-    private void setUpMap()
+    private void setPolylineOnMap()
     {
         googleMap.addPolyline(drawPlannedRoute(plannedRoutePoints));
 
@@ -211,22 +158,6 @@ public class MapActivity extends FragmentActivity
         polylineOptions.addAll(new ArrayList<LatLng>());
         myRoute = googleMap.addPolyline(polylineOptions);
     }
-
-    private void redrawMapLine()
-    {
-        /*PolylineOptions polylineOptions;
-        googleMap.clear();
-        setUpMap();
-        polylineOptions = new PolylineOptions()
-                .color(Color.BLUE)
-                .width(5);
-        polylineOptions.addAll(myRoutePoints);
-        googleMap.addPolyline(polylineOptions);*/
-
-        myRoute.setPoints(myRoutePoints);
-
-    }
-
 
     public PolylineOptions drawPlannedRoute(ArrayList<LatLng> arrayList)
     {
@@ -299,81 +230,29 @@ public class MapActivity extends FragmentActivity
         return list;
     }
 
-    @Override
-    public void onBackPressed()
+    private void redrawMapLine()
     {
+        myRoute.setPoints(myRoutePoints);
 
     }
 
-    private void pumpHeart()
+    private BroadcastReceiver locationUpdateReceiver = new BroadcastReceiver()
     {
-        img.animate().scaleXBy(0.2f).scaleYBy(0.2f).setDuration(50).setListener(scaleUpListener);
-        //playBeat();
-    }
-
-    private Animator.AnimatorListener scaleDownListener = new Animator.AnimatorListener()
-    {
-
         @Override
-        public void onAnimationStart(Animator animation)
+        public void onReceive(Context context, Intent intent)
         {
-            // TODO Auto-generated method stub
+            Log.i("MapFragment", "ReceiveLocation");
 
-        }
-
-        @Override
-        public void onAnimationRepeat(Animator animation)
-        {
-            // TODO Auto-generated method stub
-
-        }
-
-        @Override
-        public void onAnimationEnd(Animator animation)
-        {
-            // img.animate().scaleXBy(0.2f).scaleYBy(0.2f).setDuration(100).setListener(scaleUpListener);
-        }
-
-        @Override
-        public void onAnimationCancel(Animator animation)
-        {
-            // TODO Auto-generated method stub
-
-        }
-    };
-
-    private Animator.AnimatorListener scaleUpListener = new Animator.AnimatorListener()
-    {
-
-        @Override
-        public void onAnimationStart(Animator animation)
-        {
-            // TODO Auto-generated method stub
-
-        }
-
-        @Override
-        public void onAnimationRepeat(Animator animation)
-        {
-            // TODO Auto-generated method stub
-
-        }
-
-        @Override
-        public void onAnimationEnd(Animator animation)
-        {
-            img.animate().scaleXBy(-0.2f).scaleYBy(-0.2f).setDuration(50).setListener(scaleDownListener);
-
-        }
-
-        @Override
-        public void onAnimationCancel(Animator animation)
-        {
-            // TODO Auto-generated method stub
-
+            currentLatitude = intent.getDoubleExtra("latitude", 0);
+            currentLongitude = intent.getDoubleExtra("longitude", 0);
+            final LatLng latLng = new LatLng(currentLatitude, currentLongitude);
+            if (isDrawRoute)
+            {
+                myRoutePoints.add(latLng);
+                redrawMapLine();
+            }
         }
     };
 
 
 }
-

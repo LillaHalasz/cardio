@@ -56,7 +56,15 @@
             android:label="@string/title_activity_map"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
+
+
         </activity>
+        <activity
+            android:name=".WalkingScreenActivity"
+            android:label="WalkingScreenActivity">
+
+        </activity>
+
         <service android:name=".BackgroundLocationService"></service>
         <service android:name=".LocationHandlerIntentService"></service>
         <service android:name=".BackgroundPulseService"></service>

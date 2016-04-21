@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
              android:layout_width="wrap_content"
              android:layout_height="match_parent"
              android:background="#ffffff"
@@ -12,58 +12,54 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="bottom"
-        android:layout_marginTop="7dp"
         android:layout_weight="1"/>
 
     <ToggleButton
         android:id="@+id/btn_start"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right|bottom"
-        android:layout_marginBottom="@dimen/place_autocomplete_button_padding"
-        android:layout_marginRight="@dimen/place_autocomplete_button_padding"
-        android:textOff="START"
-        android:textOn="STOP"/>
-
-
-    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp">
+        android:textOff="Indulj!"
+        android:textOn="Szünet"/>
 
-        <TextView
-            android:id="@+id/tv_hr"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_centerVertical="true"
-            android:gravity="top|center"
-            android:includeFontPadding="false"
-            android:text="0"
-            android:textSize="90sp"
-            android:textStyle="bold"/>
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/indicator"
-            android:layout_alignBottom="@+id/indicator"
-            android:layout_centerHorizontal="true"
-            android:includeFontPadding="false"
-            android:text="bpm"
-            android:textSize="24sp"/>
+    <!--  <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="16dp">
 
-        <ImageView
-            android:id="@+id/indicator"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_alignEnd="@+id/textView"
-            android:layout_alignRight="@+id/textView"
-            android:layout_centerVertical="true"
-            android:scaleType="fitCenter"
-            android:src="@drawable/heart"/>
-    </RelativeLayout>
+          <TextView
+              android:id="@+id/tv_hr"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentLeft="true"
+              android:layout_alignParentTop="true"
+              android:layout_centerVertical="true"
+              android:gravity="top|center"
+              android:includeFontPadding="false"
+              android:text="0"
+              android:textSize="90sp"
+              android:textStyle="bold"/>
 
-</FrameLayout>
+          <TextView
+              android:id="@+id/textView"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignBaseline="@+id/indicator"
+              android:layout_alignBottom="@+id/indicator"
+              android:layout_centerHorizontal="true"
+              android:includeFontPadding="false"
+              android:text="bpm"
+              android:textSize="24sp"/>
+
+          <ImageView
+              android:id="@+id/indicator"
+              android:layout_width="80dp"
+              android:layout_height="80dp"
+              android:layout_alignEnd="@+id/textView"
+              android:layout_alignRight="@+id/textView"
+              android:layout_centerVertical="true"
+              android:scaleType="fitCenter"
+              android:src="@drawable/heart"/>
+      </RelativeLayout>
+  -->
+</LinearLayout>
