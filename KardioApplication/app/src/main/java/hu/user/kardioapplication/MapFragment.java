@@ -9,7 +9,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
@@ -34,10 +33,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,9 +56,6 @@ public class MapFragment extends Fragment
     boolean isDrawRoute;
     private Polyline myRoute;
 
-    private double currentLatitude;
-    private double currentLongitude;
-
     public MapFragment()
     {
     }
@@ -69,11 +63,10 @@ public class MapFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.map, container, false);
-        Log.i("MapFragmnet", "before");
 
-        String path = Environment.getExternalStorageDirectory().toString() + "/qsch.gpx";
-        File gpxFile = new File(path);
+        String gpxFile = "ksch.gpx";
         List<Location> gpxList = decodeGPX(gpxFile);
+
 
         plannedRoutePoints = new ArrayList<>();
         for (int i = 0; i < gpxList.size(); i++)
@@ -98,22 +91,18 @@ public class MapFragment extends Fragment
                 if (isChecked)
                 {
                     getActivity().startService(new Intent(getActivity(), BackgroundLocationService.class));
-
                     myRoutePoints.clear();
                     redrawMapLine();
                 }
                 else
                 {
                     getActivity().stopService(new Intent(getActivity(), BackgroundLocationService.class));
-                    getActivity().stopService(new Intent(getActivity(),BackgroundPulseService.class));
-
                 }
             }
         });
 
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(locationUpdateReceiver, new IntentFilter("updateLocation"));
         return view;
-        // return inflater.inflate(R.layout.map, container, false);
 
     }
 
@@ -153,7 +142,7 @@ public class MapFragment extends Fragment
         googleMap.addPolyline(drawPlannedRoute(plannedRoutePoints));
 
         PolylineOptions polylineOptions = new PolylineOptions()
-                .color(Color.BLUE)
+                .color(Color.rgb(255, 193, 7))
                 .width(5);
         polylineOptions.addAll(new ArrayList<LatLng>());
         myRoute = googleMap.addPolyline(polylineOptions);
@@ -166,11 +155,11 @@ public class MapFragment extends Fragment
         polylineOptionsPlanned.addAll(arrayList);
         polylineOptionsPlanned
                 .width(5)
-                .color(Color.RED);
+                .color(Color.rgb(0, 121, 107));
         return polylineOptionsPlanned;
     }
 
-    private List<Location> decodeGPX(File file)
+    private List<Location> decodeGPX(String file)
     {
         List<Location> list = new ArrayList<>();
 
@@ -178,7 +167,7 @@ public class MapFragment extends Fragment
         try
         {
             DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-            FileInputStream fileInputStream = new FileInputStream(file);
+            InputStream fileInputStream = getActivity().getAssets().open(file);
             Document document = documentBuilder.parse(fileInputStream);
             Element elementRoot = document.getDocumentElement();
 
@@ -206,24 +195,8 @@ public class MapFragment extends Fragment
             }
             fileInputStream.close();
         }
-        catch (ParserConfigurationException e)
+        catch (ParserConfigurationException | SAXException | IOException e)
         {
-// TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        catch (FileNotFoundException e)
-        {
-// TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        catch (SAXException e)
-        {
-// TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        catch (IOException e)
-        {
-// TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -243,8 +216,8 @@ public class MapFragment extends Fragment
         {
             Log.i("MapFragment", "ReceiveLocation");
 
-            currentLatitude = intent.getDoubleExtra("latitude", 0);
-            currentLongitude = intent.getDoubleExtra("longitude", 0);
+            double currentLatitude = intent.getDoubleExtra("latitude", 0);
+            double currentLongitude = intent.getDoubleExtra("longitude", 0);
             final LatLng latLng = new LatLng(currentLatitude, currentLongitude);
             if (isDrawRoute)
             {
@@ -253,6 +226,5 @@ public class MapFragment extends Fragment
             }
         }
     };
-
 
 }

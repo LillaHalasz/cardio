@@ -6,11 +6,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class HealthMattersActivity extends AppCompatActivity
 {
+    @Bind(R.id.rgHighBlood) RadioGroup rgHighBlood;
+    @Bind(R.id.etHighBloodValue) EditText etBloodValue;
+    @Bind(R.id.tvHighBloodValue) TextView tvHighBloodValue;
+    @Bind(R.id.rgTriglicerid) RadioGroup rgTriglicerid;
+    @Bind(R.id.etTriValue) EditText etTriValue;
+    @Bind(R.id.tvTriValue) TextView tvTriValue;
+    @Bind(R.id.btn_back) Button back;
+    @Bind(R.id.btn_openMap) Button openMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -18,11 +30,10 @@ public class HealthMattersActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.health_matters);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Egészségi állapot");
         ButterKnife.bind(this);
 
-      /*  final EditText etBloodValue = (EditText) findViewById(R.id.etBloodValue);
-        RadioGroup radioGroup = (RadioGroup) findViewById(R.id.rgHighBlood);
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        rgHighBlood.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
         {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId)
@@ -30,12 +41,35 @@ public class HealthMattersActivity extends AppCompatActivity
                 if (checkedId == R.id.rbHighBloodYes)
                 {
                     etBloodValue.setVisibility(View.VISIBLE);
+                    tvHighBloodValue.setVisibility(View.VISIBLE);
                 }
-                else etBloodValue.setVisibility(View.INVISIBLE);
-            }
-        });*/
+                else
+                {
+                    etBloodValue.setVisibility(View.INVISIBLE);
+                    tvHighBloodValue.setVisibility(View.INVISIBLE);
+                }
 
-        Button back = (Button) findViewById(R.id.btn_back);
+            }
+        });
+
+        rgTriglicerid.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId)
+            {
+                if (checkedId == R.id.rbHighTriYes)
+                {
+                    etTriValue.setVisibility(View.VISIBLE);
+                    tvTriValue.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    etTriValue.setVisibility(View.INVISIBLE);
+                    tvTriValue.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+
         back.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -47,7 +81,6 @@ public class HealthMattersActivity extends AppCompatActivity
             }
         });
 
-        Button openMap = (Button) findViewById(R.id.btn_openMap);
         openMap.setOnClickListener(new View.OnClickListener()
                                    {
                                        @Override

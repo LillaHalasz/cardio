@@ -3,11 +3,10 @@ package hu.user.kardioapplication;
 import android.animation.Animator;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
@@ -18,24 +17,32 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.gms.maps.model.LatLng;
-
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * Created by User on 2016.04.20..
  */
 public class HeartRateFragment extends Fragment
 {
+    @Bind(R.id.tv_hr) TextView tvHeartRate;
+    @Bind(R.id.indicator) ImageView img;
 
     int heartRate;
-    private TextView tvHeartRate;
-    private ImageView img;
-    private List<Integer> measuredHeartRate;
+    public List<Integer> measuredHeartRate;
+
     public HeartRateFragment()
     {
     }
@@ -46,9 +53,8 @@ public class HeartRateFragment extends Fragment
     {
 
         View view = inflater.inflate(R.layout.heartrate, container, false);
+        ButterKnife.bind(this, view);
 
-        tvHeartRate = (TextView) view.findViewById(R.id.tv_hr);
-        img = (ImageView) view.findViewById(R.id.indicator);
         measuredHeartRate = new ArrayList<>();
 
         getActivity().startService(new Intent(getActivity(), BackgroundPulseService.class));
@@ -68,13 +74,35 @@ public class HeartRateFragment extends Fragment
             tvHeartRate.setText("" + heartRate);
             pumpHeart();
 
+            if (heartRate < 110)
+            {
+                // ((Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE)).vibrate(2000);
+            }
+            WriteToFile(heartRate);
         }
     };
+
+    private void WriteToFile(int value)
+    {
+        String stringToWrite = String.valueOf(value);
+        String file = "myvalues";
+        String separator = ",";
+        try {
+            FileOutputStream fOut = getActivity().openFileOutput(file,getActivity().MODE_APPEND);
+            fOut.write(stringToWrite.getBytes());
+            fOut.write(separator.getBytes());
+            fOut.close();
+        }
+
+        catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
 
     private void pumpHeart()
     {
         img.animate().scaleXBy(0.2f).scaleYBy(0.2f).setDuration(50).setListener(scaleUpListener);
-        //playBeat();
     }
 
     private Animator.AnimatorListener scaleDownListener = new Animator.AnimatorListener()
@@ -97,7 +125,7 @@ public class HeartRateFragment extends Fragment
         @Override
         public void onAnimationEnd(Animator animation)
         {
-            // img.animate().scaleXBy(0.2f).scaleYBy(0.2f).setDuration(100).setListener(scaleUpListener);
+
         }
 
         @Override
@@ -139,6 +167,4 @@ public class HeartRateFragment extends Fragment
 
         }
     };
-
-
 }

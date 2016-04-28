@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<gpx xmlns="http://www.topografix.com/GPX/1/1" xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" creator="labs.coruscantconsulting.co.uk" version="1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd">
+  <metadata>
+    <link href="http://www.coruscantconsulting.co.uk">
+      <text>Coruscant Consulting Ltd. Labs</text>
+    </link>
+    <!--desc>Map data copyright 2015 Google</desc-->
+    <!--copyright author="Google Inc">
+    	<year>2015</year>
+    	<license>https://developers.google.com/maps/terms</license>
+    </copyright-->
+    <!--url>https://www.google.co.uk/maps/dir/BME+K+%C3%A9p%C3%BClet,+Budapest/Budapest,+Sch%C3%B6nherz+Zolt%C3%A1n+Koll%C3%A9gium,+Irinyi+J%C3%B3zsef+utca/@47.4767342,19.0530661,15.5z/data=!4m14!4m13!1m5!1m1!1s0x4741dc52697935ed:0xca46a2741765de75!2m2!1d19.0555793!2d47.481484!1m5!1m1!1s0x4107db5a5c6cbd49:0xb31d0004195edbfb!2m2!1d19.0532422!2d47.4730181!3e2?hl=en</url-->
+    <time>2016-04-25T13:13:51Z</time>
+  </metadata>
+  <wpt lat="47.481484" lon="19.0555793">
+    <name>BME K épület</name>
+    <desc>BME Központi épület, Budapest, Hungary</desc>
+  </wpt>
+  <wpt lat="47.4730181" lon="19.0532422">
+    <name>Budapest</name>
+    <desc>Schönherz Zoltán Kollégium, Budapest, Irinyi József utca 42, 1117 Hungary</desc>
+  </wpt>
+<trk>
+  <name>BME K épület to Budapest</name>
+  <number>1</number>
+  <trkseg>
+  <trkpt lat="47.481484" lon="19.0555793">
+    <name>BME K épület</name>
+  </trkpt>
+  <trkpt lat="47.4817395" lon="19.0560412">
+    <name>TP001</name>
+  </trkpt>
+  <trkpt lat="47.481605" lon="19.0563641">
+    <name>TP002</name>
+  </trkpt>
+  <trkpt lat="47.4802755" lon="19.0579221">
+    <name>TP003</name>
+  </trkpt>
+  <trkpt lat="47.4792217" lon="19.0558881">
+    <name>TP004</name>
+  </trkpt>
+  <trkpt lat="47.4766549" lon="19.056019">
+    <name>TP005</name>
+  </trkpt>
+  <trkpt lat="47.4756629" lon="19.0545201">
+    <name>TP006</name>
+  </trkpt>
+  <trkpt lat="47.4751214" lon="19.0560628">
+    <name>TP007</name>
+  </trkpt>
+  <trkpt lat="47.4745524" lon="19.0549065">
+    <name>TP008</name>
+  </trkpt>
+  <trkpt lat="47.4730181" lon="19.0532422">
+    <name>Budapest</name>
+  </trkpt>
+  </trkseg>
+</trk>
+</gpx>

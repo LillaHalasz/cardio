@@ -14,7 +14,6 @@ import com.google.android.gms.location.LocationResult;
 public class LocationHandlerIntentService extends IntentService
 {
     private String TAG = this.getClass().getSimpleName();
-
     public LocationHandlerIntentService()
     {
         super("Fused Location");

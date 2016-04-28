@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryLight"
     android:fitsSystemWindows="true"
     tools:context=".HealthMattersActivity">
 
@@ -38,86 +39,121 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <android.support.design.widget.TextInputLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/fab_margin"
+                    android:text="@string/string_height"
+                    android:textColor="#000000"
+                    android:textSize="20sp"/>
 
                 <EditText
                     android:id="@+id/et_height"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="* Testmagasság"
                     android:inputType="number"/>
 
-            </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/fab_margin"
+                    android:text="@string/string_weight"
+                    android:textColor="#000000"
+                    android:textSize="20sp"/>
 
                 <EditText
                     android:id="@+id/et_weight"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="*Testsúly"
                     android:inputType="number"/>
 
-            </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="*Dohányzik?"
-                android:textSize="18dp"/>
+                android:background="@color/colorTextBackground"
+                android:paddingLeft="@dimen/fab_margin"
+                android:text="@string/string_smoking"
+                android:textColor="#000000"
+                android:textSize="20sp"/>
 
             <RadioGroup
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="horizontal"
+                android:paddingBottom="40sp"
+                android:paddingTop="@dimen/fab_margin">
 
                 <RadioButton
                     android:id="@+id/rbSmokeYes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Igen"
-                    android:textSize="18dp"/>
+                    android:layout_weight="1"
+                    android:text="@string/string_yes"
+                    android:textSize="20sp"/>
 
                 <RadioButton
                     android:id="@+id/rbSmokeNo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Nem"/>
+                    android:layout_weight="1"
+                    android:text="@string/string_no"
+                    android:textSize="20sp"/>
 
             </RadioGroup>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Cukorbetegség"
-                android:textSize="18dp"/>
+                android:background="@color/colorTextBackground"
+                android:paddingLeft="@dimen/fab_margin"
+                android:text="@string/string_diabetes"
+                android:textColor="#000000"
+                android:textSize="20sp"/>
 
             <RadioGroup
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="horizontal"
+                android:paddingBottom="40sp"
+                android:paddingTop="@dimen/fab_margin">
 
                 <RadioButton
                     android:id="@+id/rbDiabYes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Igen"/>
+                    android:layout_weight="1"
+                    android:text="@string/string_yes"
+                    android:textSize="20sp"/>
 
                 <RadioButton
                     android:id="@+id/rbDiabNo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Nem"/>
+                    android:layout_weight="1"
+                    android:text="@string/string_no"
+                    android:textSize="20sp"/>
 
                 <RadioButton
                     android:id="@+id/rbDiabDontKnow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Nem tudom"/>
+                    android:layout_weight="1"
+                    android:text="@string/string_dontknow"
+                    android:textSize="20sp"/>
 
             </RadioGroup>
 
@@ -125,31 +161,42 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Ismert koszorúér betegség"
-                android:textSize="18dp"/>
+                android:background="@color/colorTextBackground"
+                android:paddingLeft="@dimen/fab_margin"
+                android:text="@string/string_coronary"
+                android:textColor="#000000"
+                android:textSize="20sp"/>
 
             <RadioGroup
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="horizontal"
+                android:paddingBottom="40sp"
+                android:paddingTop="@dimen/fab_margin">
 
                 <RadioButton
                     android:id="@+id/rbCoronalYes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Igen"/>
+                    android:layout_weight="1"
+                    android:text="@string/string_yes"
+                    android:textSize="20sp"/>
 
                 <RadioButton
                     android:id="@+id/rbCoronalNo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Nem"/>
+                    android:layout_weight="1"
+                    android:text="@string/string_no"
+                    android:textSize="20sp"/>
 
                 <RadioButton
                     android:id="@+id/rbCoronalDontKnow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Nem tudom"/>
+                    android:layout_weight="1"
+                    android:text="@string/string_dontknow"
+                    android:textSize="20sp"/>
 
             </RadioGroup>
 
@@ -157,66 +204,136 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:text="Magas vérnyomás"
-                android:textSize="18dp"/>
+                android:background="@color/colorTextBackground"
+                android:paddingLeft="@dimen/fab_margin"
+                android:text="@string/string_highblood"
+                android:textColor="#000000"
+                android:textSize="20sp"/>
 
 
             <RadioGroup
                 android:id="@+id/rgHighBlood"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
-
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/fab_margin">
 
                 <RadioButton
                     android:id="@+id/rbHighBloodYes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Igen"/>
+                    android:layout_weight="1"
+                    android:text="@string/string_yes"
+                    android:textSize="20sp"/>
 
                 <RadioButton
                     android:id="@+id/rbHighBloodNo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Nem"/>
+                    android:layout_weight="1"
+                    android:text="@string/string_no"
+                    android:textSize="20sp"/>
 
                 <RadioButton
-                    android:id="@+id/rbHighBloodDontKnow"
+                    android:id="@+id/rbBloodDontKnow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Nem tudom"/>
+                    android:layout_weight="1"
+                    android:text="@string/string_dontknow"
+                    android:textSize="20sp"/>
+
             </RadioGroup>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvHighBloodValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/string_give_value"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    android:visibility="invisible"/>
+
+
+                <EditText
+                    android:id="@+id/etHighBloodValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:visibility="invisible"/>
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Magas triglicerid szint"
-                android:textSize="18dp"/>
+                android:background="@color/colorTextBackground"
+                android:paddingLeft="@dimen/fab_margin"
+                android:text="@string/string_triglicerid"
+                android:textColor="#000000"
+                android:textSize="20sp"/>
 
             <RadioGroup
+                android:id="@+id/rgTriglicerid"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/fab_margin">
 
                 <RadioButton
                     android:id="@+id/rbHighTriYes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Igen"/>
+                    android:layout_weight="1"
+                    android:text="@string/string_yes"
+                    android:textSize="20sp"/>
 
                 <RadioButton
                     android:id="@+id/rbHighTriNo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Nem"/>
+                    android:layout_weight="1"
+                    android:text="@string/string_no"
+                    android:textSize="20sp"/>
 
                 <RadioButton
                     android:id="@+id/rbTriDontKnow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Nem tudom"/>
+                    android:layout_weight="1"
+                    android:text="@string/string_dontknow"
+                    android:textSize="20sp"/>
 
             </RadioGroup>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvTriValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/string_give_value"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    android:visibility="invisible"/>
+
+                <EditText
+                    android:id="@+id/etTriValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:visibility="invisible"/>
+
+
+            </LinearLayout>
+
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -230,7 +347,8 @@
                     android:layout_marginBottom="@dimen/place_autocomplete_button_padding"
                     android:layout_marginLeft="@dimen/place_autocomplete_button_padding"
                     android:layout_marginTop="@dimen/place_autocomplete_button_padding"
-                    android:text="Vissza"/>
+                    android:background="@drawable/button"
+                    android:text="@string/string_back"/>
 
                 <Button
                     android:id="@+id/btn_openMap"
@@ -240,7 +358,7 @@
                     android:layout_marginBottom="@dimen/place_autocomplete_button_padding"
                     android:layout_marginRight="@dimen/place_autocomplete_button_padding"
                     android:layout_marginTop="@dimen/place_autocomplete_button_padding"
-                    android:onClick="openMap"
+                    android:background="@drawable/button"
                     android:text="@string/btn_seeMap"/>
 
             </RelativeLayout>

@@ -1,6 +1,9 @@
 package hu.user.kardioapplication;
 
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -18,13 +21,18 @@ import butterknife.ButterKnife;
 public class PersonalDetailsActivity extends AppCompatActivity
 {
 
-    @Bind(R.id.et_lastname) EditText lastname;
-    @Bind(R.id.et_firstname)EditText firstname;
-    @Bind(R.id.et_telnumber) EditText telnumber;
-    @Bind(R.id.et_email) EditText email;
-    @Bind(R.id.datePicker) DatePicker datePicker;
-    @Bind(R.id.btn_continue) Button btncontinue;
-
+    @Bind(R.id.et_lastname)
+    EditText etLastName;
+    @Bind(R.id.et_firstname)
+    EditText etFirstName;
+    @Bind(R.id.et_telnumber)
+    EditText etTelNum;
+    @Bind(R.id.et_email)
+    EditText email;
+    @Bind(R.id.datePicker)
+    DatePicker datePicker;
+    @Bind(R.id.btn_continue)
+    Button btnContinue;
 
 
     @Override
@@ -34,15 +42,18 @@ public class PersonalDetailsActivity extends AppCompatActivity
         setContentView(R.layout.personal_details);
         CollapsingToolbarLayout collapsingToolbar =
                 (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        collapsingToolbar.setTitle("Út az egészséghez");
+        collapsingToolbar.setTitle("Személyes adatok");
+
         ButterKnife.bind(this);
+
+        setDividerColor(datePicker, Color.MAGENTA);
 
         //checkViews();
 
-        Button openMap = (Button) findViewById(R.id.btn_continue);
-        openMap.setOnClickListener(new View.OnClickListener()
+      //  Button openMap = (Button) findViewById(R.id.btn_continue);
+        btnContinue.setOnClickListener(new View.OnClickListener()
         {
-            public void onClick (View view)
+            public void onClick(View view)
             {
                 Intent intent = new Intent(PersonalDetailsActivity.this, HealthMattersActivity.class);
                 startActivity(intent);
@@ -53,7 +64,7 @@ public class PersonalDetailsActivity extends AppCompatActivity
 
     private void checkViews()
     {
-        lastname.addTextChangedListener(new TextWatcher()
+        etLastName.addTextChangedListener(new TextWatcher()
         {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after)
@@ -68,11 +79,11 @@ public class PersonalDetailsActivity extends AppCompatActivity
             @Override
             public void afterTextChanged(Editable s)
             {
-                Validation.hasText(lastname);
+                Validation.hasText(etLastName);
             }
         });
 
-        firstname.addTextChangedListener(new TextWatcher()
+        etFirstName.addTextChangedListener(new TextWatcher()
         {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after)
@@ -87,7 +98,7 @@ public class PersonalDetailsActivity extends AppCompatActivity
             @Override
             public void afterTextChanged(Editable s)
             {
-                Validation.hasText(firstname);
+                Validation.hasText(etFirstName);
             }
         });
 
@@ -110,7 +121,7 @@ public class PersonalDetailsActivity extends AppCompatActivity
             }
         });
 
-        telnumber.addTextChangedListener(new TextWatcher()
+        etTelNum.addTextChangedListener(new TextWatcher()
         {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after)
@@ -125,38 +136,59 @@ public class PersonalDetailsActivity extends AppCompatActivity
             @Override
             public void afterTextChanged(Editable s)
             {
-                Validation.isPhoneNumber(telnumber, false);
+                Validation.isPhoneNumber(etTelNum, false);
             }
         });
 
-       btncontinue.setOnClickListener(new View.OnClickListener()
-       {
-           @Override
-           public void onClick(View v)
-           {
-               if (checkValidation())
-               {
-                   Intent intent = new Intent(PersonalDetailsActivity.this, HealthMattersActivity.class);
-                   startActivity(intent);
-                   finish();
-               }
-               else
-                   Toast.makeText(getApplicationContext(), "Kérem ellenőrizze, hogy minden mezőt kitöltött-e!", Toast.LENGTH_SHORT).show();
-           }
-       });
+        btnContinue.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                if (checkValidation())
+                {
+                    Intent intent = new Intent(PersonalDetailsActivity.this, HealthMattersActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+                else
+                    Toast.makeText(getApplicationContext(), "Kérem ellenőrizze, hogy minden mezőt kitöltött-e!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private boolean checkValidation()
     {
         boolean ret = true;
-        if(!Validation.hasText(firstname)) ret = false;
-        if(!Validation.hasText(lastname)) ret = false;
-        if(!Validation.isEmailAddress(email, true)) ret = false;
-        if(!Validation.isPhoneNumber(telnumber, false)) ret = false;
+        if (!Validation.hasText(etFirstName)) ret = false;
+        if (!Validation.hasText(etLastName)) ret = false;
+        if (!Validation.isEmailAddress(email, true)) ret = false;
+        if (!Validation.isPhoneNumber(etTelNum, false)) ret = false;
 
         return ret;
     }
 
+    private void setDividerColor(DatePicker picker, int color)
+    {
 
+        java.lang.reflect.Field[] pickerFields = DatePicker.class.getDeclaredFields();
+        for (java.lang.reflect.Field pf : pickerFields)
+        {
+            if (pf.getName().equals("mSelectionDivider"))
+            {
+                pf.setAccessible(true);
+                try
+                {
+                    ColorDrawable colorDrawable = new ColorDrawable(color);
+                    pf.set(picker, colorDrawable);
+                }
+                catch (IllegalArgumentException | Resources.NotFoundException | IllegalAccessException e)
+                {
+                    e.printStackTrace();
+                }
+                break;
+            }
+        }
+    }
 
 }

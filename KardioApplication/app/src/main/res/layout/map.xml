@@ -2,64 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
              android:layout_width="wrap_content"
              android:layout_height="match_parent"
-             android:background="#ffffff"
+             android:background="@color/colorPrimaryLight"
              android:orientation="vertical">
-
-
     <fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="bottom"
+        android:layout_marginBottom="8sp"
         android:layout_weight="1"/>
 
     <ToggleButton
         android:id="@+id/btn_start"
-        android:layout_width="match_parent"
+        android:layout_width="280sp"
         android:layout_height="wrap_content"
-        android:textOff="Indulj!"
-        android:textOn="Szünet"/>
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/toggle"
+        android:paddingBottom="@dimen/fab_marginBottom"
+        android:textOff="@string/string_go"
+        android:textOn="@string/string_pause"/>
 
-
-    <!--  <RelativeLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="16dp">
-
-          <TextView
-              android:id="@+id/tv_hr"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_alignParentLeft="true"
-              android:layout_alignParentTop="true"
-              android:layout_centerVertical="true"
-              android:gravity="top|center"
-              android:includeFontPadding="false"
-              android:text="0"
-              android:textSize="90sp"
-              android:textStyle="bold"/>
-
-          <TextView
-              android:id="@+id/textView"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_alignBaseline="@+id/indicator"
-              android:layout_alignBottom="@+id/indicator"
-              android:layout_centerHorizontal="true"
-              android:includeFontPadding="false"
-              android:text="bpm"
-              android:textSize="24sp"/>
-
-          <ImageView
-              android:id="@+id/indicator"
-              android:layout_width="80dp"
-              android:layout_height="80dp"
-              android:layout_alignEnd="@+id/textView"
-              android:layout_alignRight="@+id/textView"
-              android:layout_centerVertical="true"
-              android:scaleType="fitCenter"
-              android:src="@drawable/heart"/>
-      </RelativeLayout>
-  -->
 </LinearLayout>

@@ -1,32 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context=".PersonalDetailsActivity">
-
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:elevation="4dp"
-            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
-
-    </android.support.design.widget.AppBarLayout>
-
-    <include layout="@layout/content_main"/>
-
-</android.support.design.widget.CoordinatorLayout>-->
 <android.support.design.widget.CoordinatorLayout
     android:id="@+id/main_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -34,6 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryLight"
     android:fitsSystemWindows="true"
     tools:context=".PersonalDetailsActivity">
 
@@ -62,15 +35,6 @@
 
             </android.support.v7.widget.Toolbar>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:minHeight="100dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/appbar"
-                app:layout_collapseMode="parallax"
-                app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"/>
-
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
@@ -90,79 +54,105 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/username_text_input_layout"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/fab_margin"
+                    android:text="@string/string_first_name"
+                    android:textColor="#000000"
+                    android:textSize="20sp"/>
 
                 <EditText
                     android:id="@+id/et_lastname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="*Vezetéknév"
                     android:inputType="text"/>
 
-            </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/fab_margin"
+                    android:text="@string/string_last_name"
+                    android:textColor="#000000"
+                    android:textSize="20sp"/>
 
                 <EditText
                     android:id="@+id/et_firstname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="*Keresztnév"
                     android:inputType="text"/>
-            </android.support.design.widget.TextInputLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="@dimen/place_autocomplete_prediction_secondary_text"
-                    android:text="Születési dátum"
-                    android:textSize="18dp"/>
-
             </LinearLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/place_autocomplete_prediction_secondary_text"
+                android:paddingLeft="@dimen/fab_margin"
+                android:paddingTop="@dimen/fab_margin"
+                android:text="@string/string_birth_date"
+                android:textColor="#000000"
+                android:textSize="20sp"/>
 
 
             <DatePicker
                 android:id="@+id/datePicker"
-                android:layout_width="wrap_content"
-                android:layout_height="149dp"
+                android:layout_width="match_parent"
+                android:layout_height="150sp"
                 android:calendarViewShown="false"
-                android:datePickerMode="spinner"
-                android:text="*Születési dátum"/>
+                android:datePickerMode="spinner"/>
 
-            <android.support.design.widget.TextInputLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorAccent"
-                android:clickable="false">
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/fab_margin"
+                    android:text="@string/string_tel_number"
+                    android:textColor="#000000"
+                    android:textSize="20sp"/>
 
                 <EditText
                     android:id="@+id/et_telnumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Telefonszám"
                     android:inputType="phone"/>
-            </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/fab_margin"
+                    android:text="@string/string_email"
+                    android:textColor="#000000"
+                    android:textSize="20sp"/>
 
                 <EditText
                     android:id="@+id/et_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Email cím"
                     android:inputType="textEmailAddress"/>
-            </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
 
 
             <Button
@@ -170,11 +160,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|right"
-                android:layout_marginBottom="@dimen/place_autocomplete_button_padding"
                 android:layout_marginRight="@dimen/place_autocomplete_button_padding"
-                android:layout_marginTop="@dimen/place_autocomplete_button_padding"
-                android:onClick="Continue"
-                android:text="Tovább"/>
+                android:background="@drawable/button"
+                android:text="@string/string_continue"/>
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

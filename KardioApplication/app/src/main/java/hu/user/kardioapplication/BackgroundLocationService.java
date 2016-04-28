@@ -37,6 +37,8 @@ public class BackgroundLocationService extends Service implements
     private Intent mIntentService;
     private PendingIntent mPendingIntent;
 
+
+
     IBinder mBinder = new LocalBinder();
 
     public class LocalBinder extends Binder
@@ -110,7 +112,6 @@ public class BackgroundLocationService extends Service implements
     {
         Log.i(TAG, "StartLocationUpdates");
 
-        //LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
         {
             // TODO: Consider calling
@@ -130,7 +131,6 @@ public class BackgroundLocationService extends Service implements
     {
         Log.i(TAG, "Stopped Location Updates");
 
-        //LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
         LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, mPendingIntent);
     }
 
@@ -141,7 +141,6 @@ public class BackgroundLocationService extends Service implements
 
         startLocationUpdates();
     }
-
 
     @Override
     public void onLocationChanged(Location location)

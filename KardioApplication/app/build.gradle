@@ -44,4 +44,10 @@ dependencies {
     compile 'com.android.support:appcompat-v7:${supportLibVersion}'
     compile 'com.android.support:design:${supportLibVersion}'
 
+    compile 'com.jjoe64:graphview:4.0.1'
+    compile 'com.github.PhilJay:MPAndroidChart:v2.2.4'
+    compile 'com.github.lecho:hellocharts-android:v1.5.8'
+    compile 'com.android.support:recyclerview-v7:23.1.1'
+
+
 }

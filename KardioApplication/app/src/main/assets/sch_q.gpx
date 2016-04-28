@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<gpx>
+  <metadata>
+	<name> Kollégium - BME Q </name>
+	<desc> 200 m, 10 perc </desc>
+    <time>2016-04-18T15:37:19Z</time>
+  </metadata>
+  <wpt lat="47.4730181" lon="19.0532422">
+    <name>Budapest</name>
+    <desc>Schönherz Zoltán Kollégium, Budapest, Irinyi József utca 42, 1117 Hungary</desc>
+  </wpt>
+  <wpt lat="47.4734528" lon="19.0598879">
+    <name>BME Q épület</name>
+    <desc>BME Q épület, Budapest, 2 1117, Magyar tudósok körútja 2, 1117 Hungary</desc>
+  </wpt>
+<trk>
+  <name>Budapest to BME Q épület</name>
+  <number>1</number>
+  <trkseg>
+	  <trkpt lat="47.4730181" lon="19.0532422">
+		<name>Budapest</name>
+	  </trkpt>
+	  <trkpt lat="47.4733726" lon="19.0528672">
+		<name>TP001</name>
+	  </trkpt>
+	  <trkpt lat="47.4745524" lon="19.0549065">
+		<name>TP002</name>
+	  </trkpt>
+	  <trkpt lat="47.4748961" lon="19.056175">
+		<name>TP003</name>
+	  </trkpt>
+	  <trkpt lat="47.4745905" lon="19.056337">
+		<name>TP004</name>
+	  </trkpt>
+	  <trkpt lat="47.4734528" lon="19.0598879">
+		<name>BME Q épület</name>
+	  </trkpt>
+  </trkseg>
+</trk>
+</gpx>
