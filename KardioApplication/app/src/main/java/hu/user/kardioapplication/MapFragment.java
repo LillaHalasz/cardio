@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
@@ -16,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ToggleButton;
 
@@ -26,6 +28,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import net.danlew.android.joda.JodaTimeAndroid;
+
+import org.joda.time.DateTime;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -42,19 +47,31 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 /**
  * Created by User on 2016.04.20..
  */
 public class MapFragment extends Fragment
 {
+    @Bind(R.id.btnFinish)
+    Button btnFinish;
+
     SupportMapFragment mapFragment;
     GoogleMap googleMap;
 
     ArrayList<LatLng> myRoutePoints;
     ArrayList<LatLng> plannedRoutePoints;
 
+    SharedPreferences sharedPreferences;
+
     boolean isDrawRoute;
     private Polyline myRoute;
+    private float distance;
+
+    private boolean firstRun = true;
+
 
     public MapFragment()
     {
@@ -63,6 +80,11 @@ public class MapFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.map, container, false);
+        ButterKnife.bind(this, view);
+        JodaTimeAndroid.init(getContext());
+
+        sharedPreferences = getActivity().getApplicationContext().getSharedPreferences("Details", Context.MODE_PRIVATE);
+        final SharedPreferences.Editor editor = sharedPreferences.edit();
 
         String gpxFile = "ksch.gpx";
         List<Location> gpxList = decodeGPX(gpxFile);
@@ -90,14 +112,45 @@ public class MapFragment extends Fragment
 
                 if (isChecked)
                 {
+                  //  getActivity().startService(new Intent(getActivity(), BackgroundPulseService.class));
                     getActivity().startService(new Intent(getActivity(), BackgroundLocationService.class));
                     myRoutePoints.clear();
                     redrawMapLine();
+
+                    if (firstRun)
+                    {
+                        DateTime startTime = DateTime.now();
+                        long startMillis = startTime.getMillis();
+                        editor.putLong("startTime" , startMillis);
+                        editor.commit();
+                        Log.i("StartTime", "time:" + startTime + "millis:" + startMillis);
+
+                        firstRun = false;
+                    }
                 }
                 else
                 {
                     getActivity().stopService(new Intent(getActivity(), BackgroundLocationService.class));
                 }
+            }
+        });
+
+        btnFinish.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Log.i("WalkingScreen", "finishClick");
+                int distanceInt = (int) (distance * 100);
+                editor.putInt("distance", distanceInt);
+                DateTime endTime = DateTime.now();
+                long endTimeMillis = endTime.getMillis();
+                editor.putLong("endTime" , endTimeMillis);
+                editor.commit();
+                getActivity().stopService(new Intent(getActivity(), BackgroundLocationService.class));
+                getActivity().stopService(new Intent(getActivity(), BackgroundPulseService.class));
+                startActivity(new Intent(getActivity(), SummaryScreenActivity.class));
+                getActivity().finish();
             }
         });
 
@@ -209,6 +262,9 @@ public class MapFragment extends Fragment
 
     }
 
+
+    double previousLatitude = 0;
+    double previousLongitude = 0;
     private BroadcastReceiver locationUpdateReceiver = new BroadcastReceiver()
     {
         @Override
@@ -219,12 +275,35 @@ public class MapFragment extends Fragment
             double currentLatitude = intent.getDoubleExtra("latitude", 0);
             double currentLongitude = intent.getDoubleExtra("longitude", 0);
             final LatLng latLng = new LatLng(currentLatitude, currentLongitude);
+            float[] result = new float[1];
             if (isDrawRoute)
             {
                 myRoutePoints.add(latLng);
+                if (myRoutePoints.size() >= 2)
+                {
+
+                    Log.i("prevLat", "" + previousLatitude);
+                    Log.i("prevLong", "" + previousLongitude);
+                    Log.i("currLat", "" + currentLatitude);
+                    Log.i("currLong", "" + currentLongitude);
+                    // Location.distanceBetween(Math.toRadians(0.0), Math.toRadians(0.0), Math.toRadians(currentLatitude), Math.toRadians(currentLongitude), result);
+                    Location.distanceBetween(Math.toRadians(previousLatitude), Math.toRadians(previousLongitude), Math.toRadians(currentLatitude), Math.toRadians(currentLongitude), result);
+                    Log.i("result[0]", "" + result[0]);
+                    distance += result[0];
+                    previousLatitude = currentLatitude;
+                    previousLongitude = currentLongitude;
+                    Log.i("distance", "" + distance);
+
+                }
+                else
+                {
+                    previousLatitude = currentLatitude;
+                    previousLongitude = currentLongitude;
+                }
                 redrawMapLine();
             }
         }
     };
+
 
 }

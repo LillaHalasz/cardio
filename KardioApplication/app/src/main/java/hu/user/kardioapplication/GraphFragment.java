@@ -133,6 +133,7 @@ public class GraphFragment extends Fragment
             Log.i("String", string);
 
             String[] raw = string.split(",");
+
             points = new ArrayList<>();
             for (int i = 0; i < raw.length; i++)
             {

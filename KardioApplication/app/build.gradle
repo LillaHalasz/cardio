@@ -10,6 +10,7 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true;
     }
     buildTypes {
         release {
@@ -37,17 +38,16 @@ dependencies {
     //ButterKnife
     compile 'com.jakewharton:butterknife:7.0.1'
     //MaterialDesign
-    compile 'com.github.vajro:MaterialDesignLibrary:1.6'
+//    compile 'com.github.vajro:MaterialDesignLibrary:1.6'
 
     compile 'com.klinkerapps:sliding-activity:1.2.2'
 
     compile 'com.android.support:appcompat-v7:${supportLibVersion}'
     compile 'com.android.support:design:${supportLibVersion}'
 
-    compile 'com.jjoe64:graphview:4.0.1'
     compile 'com.github.PhilJay:MPAndroidChart:v2.2.4'
-    compile 'com.github.lecho:hellocharts-android:v1.5.8'
     compile 'com.android.support:recyclerview-v7:23.1.1'
+    compile 'net.danlew:android.joda:2.9.3'
 
 
 }

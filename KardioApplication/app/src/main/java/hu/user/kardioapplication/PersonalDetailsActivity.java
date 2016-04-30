@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class PersonalDetailsActivity extends AppCompatActivity
 {
@@ -50,8 +51,8 @@ public class PersonalDetailsActivity extends AppCompatActivity
 
         //checkViews();
 
-      //  Button openMap = (Button) findViewById(R.id.btn_continue);
-        btnContinue.setOnClickListener(new View.OnClickListener()
+
+      /*  btnContinue.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View view)
             {
@@ -59,7 +60,14 @@ public class PersonalDetailsActivity extends AppCompatActivity
                 startActivity(intent);
                 finish();
             }
-        });
+        });*/
+    }
+    @OnClick(R.id.btn_continue)
+    public void startActivity(Button button)
+    {
+        Intent intent = new Intent(PersonalDetailsActivity.this, HealthMattersActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void checkViews()

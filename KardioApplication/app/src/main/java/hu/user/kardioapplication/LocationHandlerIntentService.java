@@ -41,6 +41,7 @@ public class LocationHandlerIntentService extends IntentService
             {
                 Log.i(TAG, "onHandleIntent " + location.getLatitude() + "," + location.getLongitude());
 
+                broadcastIntent.putExtra("location", location);
                 broadcastIntent.putExtra("latitude", location.getLatitude());
                 broadcastIntent.putExtra("longitude", location.getLongitude());
                 LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);

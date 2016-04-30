@@ -35,15 +35,19 @@
             android:name="hu.user.kardioapplication.GraphFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.85"
+            android:layout_weight="4"
             tools:layout="@layout/graph"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1sp"
+            android:background="@color/colorTextBackground"/>
 
-     <!--   <fragment
-            android:id="@+id/summarymap"
-            android:name="com.google.android.gms.maps.SupportMapFragment"
+        <fragment
+            android:id="@+id/routeSummaryFragment"
+            android:name="hu.user.kardioapplication.RouteSummaryFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.60"/>-->
+            android:layout_weight="1"/>
 
         <Button
             android:id="@+id/btnExit"
