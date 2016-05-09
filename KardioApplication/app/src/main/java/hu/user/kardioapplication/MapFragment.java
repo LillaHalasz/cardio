@@ -87,16 +87,16 @@ public class MapFragment extends Fragment
         final SharedPreferences.Editor editor = sharedPreferences.edit();
 
         String gpxFile = "ksch.gpx";
-        List<Location> gpxList = decodeGPX(gpxFile);
+       // List<Location> gpxList = decodeGPX(gpxFile);
+        plannedRoutePoints = (ArrayList<LatLng>) decodeGPX(gpxFile);
 
-
-        plannedRoutePoints = new ArrayList<>();
+       /* plannedRoutePoints = new ArrayList<>();
         for (int i = 0; i < gpxList.size(); i++)
         {
             LatLng latLng = new LatLng(gpxList.get(i).getLatitude(), gpxList.get(i).getLongitude());
             plannedRoutePoints.add(latLng);
 
-        }
+        }*/
 
         setUpMap();
 
@@ -112,8 +112,7 @@ public class MapFragment extends Fragment
 
                 if (isChecked)
                 {
-                  //  getActivity().startService(new Intent(getActivity(), BackgroundPulseService.class));
-                    getActivity().startService(new Intent(getActivity(), BackgroundLocationService.class));
+
                     myRoutePoints.clear();
                     redrawMapLine();
 
@@ -212,9 +211,9 @@ public class MapFragment extends Fragment
         return polylineOptionsPlanned;
     }
 
-    private List<Location> decodeGPX(String file)
+    private List<LatLng> decodeGPX(String file)
     {
-        List<Location> list = new ArrayList<>();
+        List<LatLng> list = new ArrayList<>();
 
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         try
@@ -238,12 +237,16 @@ public class MapFragment extends Fragment
                 String newLongitude = attributes.getNamedItem("lon").getTextContent();
                 Double newLongitude_double = Double.parseDouble(newLongitude);
 
-                String newLocationName = newLatitude + ":" + newLongitude;
+
+                LatLng latLng = new LatLng(newLatitude_double, newLongitude_double);
+
+              /*  String newLocationName = newLatitude + ":" + newLongitude;
                 Location newLocation = new Location(newLocationName);
                 newLocation.setLatitude(newLatitude_double);
                 newLocation.setLongitude(newLongitude_double);
 
-                list.add(newLocation);
+                list.add(newLocation);*/
+                list.add(latLng);
 
             }
             fileInputStream.close();
@@ -281,19 +284,12 @@ public class MapFragment extends Fragment
                 myRoutePoints.add(latLng);
                 if (myRoutePoints.size() >= 2)
                 {
-
-                    Log.i("prevLat", "" + previousLatitude);
-                    Log.i("prevLong", "" + previousLongitude);
-                    Log.i("currLat", "" + currentLatitude);
-                    Log.i("currLong", "" + currentLongitude);
-                    // Location.distanceBetween(Math.toRadians(0.0), Math.toRadians(0.0), Math.toRadians(currentLatitude), Math.toRadians(currentLongitude), result);
                     Location.distanceBetween(Math.toRadians(previousLatitude), Math.toRadians(previousLongitude), Math.toRadians(currentLatitude), Math.toRadians(currentLongitude), result);
                     Log.i("result[0]", "" + result[0]);
                     distance += result[0];
                     previousLatitude = currentLatitude;
                     previousLongitude = currentLongitude;
                     Log.i("distance", "" + distance);
-
                 }
                 else
                 {

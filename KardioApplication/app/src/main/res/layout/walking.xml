@@ -1,38 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              app:layout_behavior="@string/appbar_scrolling_view_behavior"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/colorPrimaryLight">
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryLight"
+    android:fitsSystemWindows="true">
 
-
-    <fragment
-        android:id="@+id/HeartRateFragment"
-        android:name="hu.user.kardioapplication.HeartRateFragment"
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        tools:layout="@layout/heartrate"/>
-
-    <fragment
-        android:id="@+id/MapFragment"
-        android:name="hu.user.kardioapplication.MapFragment"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="4"
-        android:layout_marginBottom="8sp"
-        tools:layout="@layout/map"/>
-
-  <!--  <Button
-        android:id="@+id/btnFinish"
-        android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/finishbutton"
-        android:layout_marginBottom="8sp"
-        android:text="@string/string_finish"
-        android:layout_gravity="center_horizontal"/>-->
+        android:theme="@style/AppTheme.AppBarOverlay">
 
-</LinearLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  xmlns:app="http://schemas.android.com/apk/res-auto"
+                  xmlns:tools="http://schemas.android.com/tools"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:background="@color/colorPrimaryLight"
+                  android:orientation="vertical"
+                  app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+        <fragment
+            android:id="@+id/HeartRateFragment"
+            android:name="hu.user.kardioapplication.HeartRateFragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            tools:layout="@layout/heartrate"/>
+        <Button
+            android:id="@+id/katt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <fragment
+            android:id="@+id/MapFragment"
+            android:name="hu.user.kardioapplication.MapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="8sp"
+            android:layout_weight="4"
+            tools:layout="@layout/map"/>
+
+        <!--  <Button
+              android:id="@+id/btnFinish"
+              android:layout_width="280dp"
+              android:layout_height="wrap_content"
+              android:background="@drawable/finishbutton"
+              android:layout_marginBottom="8sp"
+              android:text="@string/string_finish"
+              android:layout_gravity="center_horizontal"/>-->
+
+    </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

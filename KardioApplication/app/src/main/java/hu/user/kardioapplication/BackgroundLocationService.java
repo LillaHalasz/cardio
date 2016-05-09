@@ -49,6 +49,7 @@ public class BackgroundLocationService extends Service implements
         }
     }
 
+
     @Override
     public void onCreate()
     {

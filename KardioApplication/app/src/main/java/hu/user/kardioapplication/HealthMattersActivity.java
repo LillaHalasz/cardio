@@ -10,11 +10,15 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import java.io.UnsupportedEncodingException;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class HealthMattersActivity extends AppCompatActivity
 {
+    BluetoothLeService mBluetoothLeService;
+
     @Bind(R.id.rgHighBlood) RadioGroup rgHighBlood;
     @Bind(R.id.etHighBloodValue) EditText etBloodValue;
     @Bind(R.id.tvHighBloodValue) TextView tvHighBloodValue;
@@ -75,6 +79,18 @@ public class HealthMattersActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+              /*  try
+                {
+                    if (mBluetoothLeService != null)
+                    {
+                        mBluetoothLeService.readCustomCharacteristic();
+                    }
+                }
+                catch (UnsupportedEncodingException e)
+                {
+                    e.printStackTrace();
+                }
+*/
                 Intent intent = new Intent(HealthMattersActivity.this, PersonalDetailsActivity.class);
                 startActivity(intent);
                 finish();
@@ -86,7 +102,8 @@ public class HealthMattersActivity extends AppCompatActivity
                                        @Override
                                        public void onClick(View view)
                                        {
-                                           Intent intent = new Intent(HealthMattersActivity.this, WalkingScreenActivity.class);
+                                          // Intent intent = new Intent(HealthMattersActivity.this, WalkingScreenActivity.class);
+                                           Intent intent = new Intent(HealthMattersActivity.this, DeviceScanActivity.class);
                                            startActivity(intent);
                                            finish();
                                        }

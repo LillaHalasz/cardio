@@ -56,6 +56,7 @@ public class RouteSummaryFragment extends Fragment
         edit.clear();
         edit.commit();
 
+        tvDistanceValue.setText(String.valueOf(distanceInM));
         if (startTimeMillis == 0)
         {
             String duration = CalculateDuration(0,0);
