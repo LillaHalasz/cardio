@@ -4,10 +4,13 @@ import android.app.ListActivity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +26,9 @@ import butterknife.ButterKnife;
 
 public class DeviceScanActivity extends ListActivity
 {
+    private final static String TAG = DeviceScanActivity.class.getSimpleName();
+
+    private BluetoothDevice device;
 
     private static final int REQUEST_ENABLE_BT = 1;
     private static final long SCAN_PERIOD = 10000;
@@ -45,10 +51,11 @@ public class DeviceScanActivity extends ListActivity
 
         mHandler = new Handler();
 
-        final BluetoothManager bluetoothManager =
-                (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
+        final BluetoothManager bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
         mBluetoothAdapter = bluetoothManager.getAdapter();
 
+        final IntentFilter bondintent = new IntentFilter(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
+        registerReceiver(mPairReceiver, bondintent);
 
         btnScan.setOnClickListener(new View.OnClickListener()
         {
@@ -76,6 +83,7 @@ public class DeviceScanActivity extends ListActivity
     protected void onDestroy()
     {
         super.onDestroy();
+        unregisterReceiver(mPairReceiver);
     }
 
     @Override
@@ -98,13 +106,56 @@ public class DeviceScanActivity extends ListActivity
         scanLeDevice(true);
     }
 
+    final BroadcastReceiver mPairReceiver = new BroadcastReceiver()
+    {
+        @Override
+        public void onReceive(Context context,  Intent intent)
+        {
+            String action = intent.getAction();
+
+            if (BluetoothDevice.ACTION_BOND_STATE_CHANGED.equals(action))
+            {
+                long start = System.currentTimeMillis();
+                final int state = intent.getIntExtra(BluetoothDevice.EXTRA_BOND_STATE, BluetoothDevice.ERROR);
+                if (state == BluetoothDevice.BOND_BONDED)
+                {
+                    Log.d(TAG, "CALLBACK RECIEVED Bonded");
+                    final Intent startIntent = new Intent(getApplication(), DeviceControlActivity.class);
+
+
+                    //   final Intent intent = new Intent(this, WalkingScreenActivity.class);
+                    startIntent.putExtra(DeviceControlActivity.EXTRAS_DEVICE_NAME, device.getName());
+                    startIntent.putExtra(DeviceControlActivity.EXTRAS_DEVICE_ADDRESS, device.getAddress());
+                    if (mScanning)
+                    {
+                        mBluetoothAdapter.stopLeScan(mLeScanCallback);
+                        mScanning = false;
+                    }
+                    startActivity(startIntent);
+                }
+                else if (state == BluetoothDevice.BOND_NONE)
+                {
+                    Log.d(TAG, "CALLBACK RECIEVED: Not Bonded");
+                }
+                else if (state == BluetoothDevice.BOND_BONDING)
+                {
+                    Log.d(TAG, "CALLBACK RECIEVED: Trying to bond");
+                }
+                long end = System.currentTimeMillis();
+                Log.d("time", "" + (end-start));
+            }
+        }
+    };
+
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id)
     {
-        final BluetoothDevice device = mLeDeviceListAdapter.getDevice(position);
+        device = mLeDeviceListAdapter.getDevice(position);
         if (device == null) return;
         device.createBond();
 
+
+/*
         final Intent intent = new Intent(this, DeviceControlActivity.class);
 
 
@@ -116,7 +167,7 @@ public class DeviceScanActivity extends ListActivity
             mBluetoothAdapter.stopLeScan(mLeScanCallback);
             mScanning = false;
         }
-        startActivity(intent);
+        startActivity(intent);*/
     }
 
     private void scanLeDevice(final boolean enable)

@@ -90,31 +90,6 @@ public class WalkingScreenActivity extends FragmentActivity
             @Override
             public void onClick(View view)
             {
-
-       /* try
-        {*/
-                if (mBluetoothLeService != null)
-                {
-                    // mBluetoothLeService.writeCustomCharacteristic(birthPlace);
-                    mBluetoothLeService.writeCustomCharacteristic(0x01);
-                }
-   /*     }
-        catch (UnsupportedEncodingException e)
-        {
-            e.printStackTrace();
-        }
-*/
-       /* try
-        {
-            if (mBluetoothLeService != null)
-            {
-                mBluetoothLeService.readCustomCharacteristic();
-            }
-        }
-        catch (UnsupportedEncodingException e)
-        {
-            e.printStackTrace();
-        }*/
             }
         });
     }

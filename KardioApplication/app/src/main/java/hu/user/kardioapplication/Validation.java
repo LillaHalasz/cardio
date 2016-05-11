@@ -18,7 +18,7 @@ public class Validation
     private static final String EMAIL_MSG = "Helytelen e-mail cím formátum";
     private static final String PHONE_MSG = "Helytelen telefonszám";
 
-    // call this method when you need to check email validation
+    // call this method when you need to check etEmail validation
     public static boolean isEmailAddress(EditText editText, boolean required)
     {
         return isValid(editText, EMAIL_REGEX, EMAIL_MSG, required);

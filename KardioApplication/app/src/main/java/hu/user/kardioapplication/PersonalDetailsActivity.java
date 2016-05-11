@@ -1,8 +1,5 @@
 package hu.user.kardioapplication;
 
-import android.app.Activity;
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -18,13 +15,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.RadioButton;
 
-import java.io.UnsupportedEncodingException;
+import org.joda.time.DateTime;
+import org.joda.time.Years;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -32,12 +29,6 @@ import butterknife.OnClick;
 
 public class PersonalDetailsActivity extends AppCompatActivity
 {
-    public static final String EXTRAS_DEVICE_NAME = "DEVICE_NAME";
-    public static final String EXTRAS_DEVICE_ADDRESS = "DEVICE_ADDRESS";
-    private final static String TAG = DeviceControlActivity.class.getSimpleName();
-    private String mDeviceName;
-    private String mDeviceAddress;
-    BluetoothLeService mBluetoothLeService;
 
     @Bind(R.id.et_lastname)
     EditText etLastName;
@@ -46,37 +37,25 @@ public class PersonalDetailsActivity extends AppCompatActivity
     @Bind(R.id.et_telnumber)
     EditText etTelNum;
     @Bind(R.id.et_email)
-    EditText email;
+    EditText etEmail;
     @Bind(R.id.datePicker)
     DatePicker datePicker;
     @Bind(R.id.et_birthplace)
     EditText etBirthPlace;
     @Bind(R.id.btn_continue)
     Button btnContinue;
+    @Bind(R.id.rbGenderMale)
+    RadioButton rbGenderMale;
+    @Bind(R.id.rbGenderFemale)
+    RadioButton rbGenderFemale;
+
 
     SharedPreferences sharedPreferences;
-
-    private final ServiceConnection mServiceConnection = new ServiceConnection()
-    {
-        @Override
-        public void onServiceConnected(ComponentName componentName, IBinder service)
-        {
-            mBluetoothLeService = ((BluetoothLeService.LocalBinder) service).getService();
-            if (!mBluetoothLeService.initialize())
-            {
-                Log.e(TAG, "Unable to initialize Bluetooth");
-                finish();
-            }
-            // Automatically connects to the device upon successful start-up initialization.
-            mBluetoothLeService.connect(mDeviceAddress);
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName componentName)
-        {
-            mBluetoothLeService = null;
-        }
-    };
+    int gender;
+    int birthYear;
+    int birthMonth;
+    int birthDay;
+    int age;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -86,14 +65,6 @@ public class PersonalDetailsActivity extends AppCompatActivity
         CollapsingToolbarLayout collapsingToolbar =
                 (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbar.setTitle("Személyes adatok");
-
-        final Intent intent = getIntent();
-        mDeviceName = intent.getStringExtra(EXTRAS_DEVICE_NAME);
-        mDeviceAddress = intent.getStringExtra(EXTRAS_DEVICE_ADDRESS);
-
-      /*  Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
-        bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);*/
-
         ButterKnife.bind(this);
 
         setDividerColor(datePicker, Color.MAGENTA);
@@ -116,24 +87,31 @@ public class PersonalDetailsActivity extends AppCompatActivity
     @OnClick(R.id.btn_continue)
     public void startActivity(Button button)
     {
-       /* try
-        {
-            if(mBluetoothLeService != null)
-            {
-                mBluetoothLeService.writeCustomCharacteristic(etBirthPlace.getText().toString());
-            }
-        }
-        catch (UnsupportedEncodingException e)
-        {
-            e.printStackTrace();
-        }*/
+        if (rbGenderMale.isChecked()) gender = 0; //male
+        else gender = 1; //female
+
+        birthYear = datePicker.getYear();
+        birthMonth = datePicker.getMonth() + 1;
+        birthDay = datePicker.getDayOfMonth();
+
+
+
+        DateTime dateOfBirth = new DateTime(birthYear,birthMonth, birthDay,0 ,0);
+        DateTime currentDate = DateTime.now();
+        age = Years.yearsBetween(dateOfBirth,currentDate).getYears();
 
         sharedPreferences = getSharedPreferences("Personal", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(etFirstName.getText().toString(),"FirstName");
-        editor.putString(etLastName.getText().toString(),"LastName");
-        editor.putString(etTelNum.getText().toString(),"TelNumber");
-        editor.putString("HELLIKA", "BirthPlace");
+        editor.putString("FirstName" , etFirstName.getText().toString());
+        editor.putString("LastName" , etLastName.getText().toString());
+        editor.putString("TelNumber" , etTelNum.getText().toString());
+        editor.putString("BirthPlace", etBirthPlace.getText().toString());
+        editor.putString("Email", etEmail.getText().toString());
+        editor.putInt("Gender", gender);
+        editor.putInt("BirthDay", birthDay);
+        editor.putInt("BirthMonth", birthMonth);
+        editor.putInt("BirthYear", birthYear);
+        editor.putInt("Age", age);
         editor.commit();
         Intent intent = new Intent(PersonalDetailsActivity.this, HealthMattersActivity.class);
         startActivity(intent);
@@ -180,7 +158,7 @@ public class PersonalDetailsActivity extends AppCompatActivity
             }
         });
 
-        email.addTextChangedListener(new TextWatcher()
+        etEmail.addTextChangedListener(new TextWatcher()
         {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after)
@@ -195,7 +173,7 @@ public class PersonalDetailsActivity extends AppCompatActivity
             @Override
             public void afterTextChanged(Editable s)
             {
-                Validation.isEmailAddress(email, true);
+                Validation.isEmailAddress(etEmail, true);
             }
         });
 
@@ -240,7 +218,7 @@ public class PersonalDetailsActivity extends AppCompatActivity
         boolean ret = true;
         if (!Validation.hasText(etFirstName)) ret = false;
         if (!Validation.hasText(etLastName)) ret = false;
-        if (!Validation.isEmailAddress(email, true)) ret = false;
+        if (!Validation.isEmailAddress(etEmail, true)) ret = false;
         if (!Validation.isPhoneNumber(etTelNum, false)) ret = false;
 
         return ret;
