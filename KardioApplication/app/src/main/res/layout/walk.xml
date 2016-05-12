@@ -1,7 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryLight"
+    android:fitsSystemWindows="true">
 
-</LinearLayout>
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+    </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  xmlns:app="http://schemas.android.com/apk/res-auto"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:background="@color/colorPrimaryLight"
+                  android:orientation="vertical"
+                  app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <TextView
+            android:id="@+id/tv_hr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:textColor="@color/colorPrimary"
+            android:textSize="80sp"
+            android:text="100"
+            android:textStyle="bold"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/fab_margin"
+            android:id="@+id/linearLayout">
+
+            <ImageView
+                android:id="@+id/indicator"
+                android:layout_width="match_parent"
+                android:layout_height="40sp"
+                android:src="@drawable/heart"/>
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text="@string/string_bpm"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20sp"/>
+        </LinearLayout>
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="8sp"
+            android:layout_weight="1"/>
+
+        <ToggleButton
+            android:id="@+id/btn_start"
+            android:layout_width="280sp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/toggle"
+            android:paddingBottom="@dimen/fab_marginBottom"
+            android:textOff="@string/string_go"
+            android:textOn="@string/string_pause"/>
+
+        <Button
+            android:id="@+id/btnFinish"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/finishbutton"
+            android:layout_marginBottom="8sp"
+            android:layout_marginTop="8sp"
+            android:text="@string/string_finish"
+            android:layout_gravity="center_horizontal"/>
+    </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

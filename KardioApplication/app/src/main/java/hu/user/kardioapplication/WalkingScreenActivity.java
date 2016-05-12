@@ -170,6 +170,7 @@ public class WalkingScreenActivity extends FragmentActivity implements Bluetooth
             @Override
             public void onClick(View view)
             {
+                mBluetoothLeService.writeCustomCharacteristic(DEVICE_CONTROL_SERVICE, DEVICE_CONTROL_CHARAC, 0x01);
             }
         });
 

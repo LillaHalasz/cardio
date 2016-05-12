@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="hu.user.kardioapplication"
-          xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools">
+<manifest
+    package="hu.user.kardioapplication"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
@@ -16,7 +17,9 @@
     <uses-permission android:name="android.permission.BLUETOOTH"/>
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
 
-    <uses-feature android:name="android.hardware.bluetooth_le" android:required="true"/>
+    <uses-feature
+        android:name="android.hardware.bluetooth_le"
+        android:required="true"/>
 
     <uses-feature
         android:glEsVersion="0x00020000"
@@ -32,7 +35,6 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-
 
 
         <meta-data
@@ -60,6 +62,12 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
+            android:name=".WalkingActivity"
+            android:label="WalkingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
             android:name=".WalkingScreenActivity"
             android:label="WalkingScreenActivity"
             android:screenOrientation="portrait"
@@ -73,14 +81,17 @@
         <activity android:name=".SelectMapActivity">
 
         </activity>
-        <activity android:name=".DeviceScanActivity"
-                  android:theme="@style/AppTheme.NoActionBar">
+        <activity
+            android:name=".DeviceScanActivity"
+            android:theme="@style/AppTheme.NoActionBar">
 
 
         </activity>
         <activity android:name=".DeviceControlActivity"/>
 
-        <service android:name=".BluetoothLeService" android:enabled="true"/>
+        <service
+            android:name=".BluetoothLeService"
+            android:enabled="true"/>
 
         <service android:name=".BackgroundLocationService"/>
         <service android:name=".LocationHandlerIntentService"/>

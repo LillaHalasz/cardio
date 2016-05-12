@@ -122,8 +122,8 @@ public class DeviceScanActivity extends ListActivity
                     Log.d(TAG, "CALLBACK RECIEVED Bonded");
           //          final Intent startIntent = new Intent(getApplication(), DeviceControlActivity.class);
 
-
-                    final Intent startIntent = new Intent(getApplication(), WalkingScreenActivity.class);
+          //         final Intent startIntent = new Intent(getApplication(), WalkingScreenActivity.class);
+                    final Intent startIntent = new Intent(getApplication(), WalkingActivity.class);
                     startIntent.putExtra(DeviceControlActivity.EXTRAS_DEVICE_NAME, device.getName());
                     startIntent.putExtra(DeviceControlActivity.EXTRAS_DEVICE_ADDRESS, device.getAddress());
                     if (mScanning)
