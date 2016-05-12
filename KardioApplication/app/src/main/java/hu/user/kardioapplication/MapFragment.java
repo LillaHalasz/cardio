@@ -148,6 +148,7 @@ public class MapFragment extends Fragment
                 editor.commit();
                 getActivity().stopService(new Intent(getActivity(), BackgroundLocationService.class));
                 getActivity().stopService(new Intent(getActivity(), BackgroundPulseService.class));
+                getActivity().stopService(new Intent(getActivity(), BluetoothLeService.class));
                 startActivity(new Intent(getActivity(), SummaryScreenActivity.class));
                 getActivity().finish();
             }

@@ -64,6 +64,9 @@ public class DeviceControlActivity extends Activity implements BluetoothLeListen
     public static String AGE_CHARAC = "00002A80-0000-1000-8000-00805f9b34fb";
     public static String WEIGHT_CHARAC = "00002A98-0000-1000-8000-00805f9b34fb";
     public static String HEIGHT_CHARAC = "00002A8E-0000-1000-8000-00805f9b34fb";
+    public static String DEVICE_CONTROL_SERVICE = "e4b83ca0-d191-11e4-90a5-0002a5d5c51b";
+    public static String DEVICE_CONTROL_CHARAC = "00f45340-d192-11e4-a94a-0002a5d5c51b";
+
 
 
     String firstName;
@@ -200,7 +203,7 @@ public class DeviceControlActivity extends Activity implements BluetoothLeListen
         birthMonth = sharedPref.getInt("BirthMonth", 0);
         birthDay = sharedPref.getInt("BirthDay", 0);
         byte[] dateOfBirth = new byte[4];
-        
+
         age = sharedPref.getInt("Age", 0);
         weight = sharedPref.getInt("Weight", 0);
         height = sharedPref.getInt("Height", 0);
@@ -343,37 +346,38 @@ public class DeviceControlActivity extends Activity implements BluetoothLeListen
 
                 this.ble_InitState = BLE_RETRY_NUMBER;
                 this.ble_InitState = INIT_STATE_AGE;
-                mBluetoothLeService.writeCustomCharacteristic(USER_DATA_SERVICE,AGE_CHARAC, BigInteger.valueOf(age).toByteArray());
+                mBluetoothLeService.writeCustomCharacteristic(USER_DATA_SERVICE,AGE_CHARAC, age);
                 break;
 
             case INIT_STATE_AGE:
                 this.ble_InitState = BLE_RETRY_NUMBER;
                 this.ble_InitState = INIT_STATE_GENDER;
-                mBluetoothLeService.writeCustomCharacteristic(USER_DATA_SERVICE, GENDER_CHARAC, BigInteger.valueOf(gender).toByteArray());
+                mBluetoothLeService.writeCustomCharacteristic(USER_DATA_SERVICE, GENDER_CHARAC, gender);
                 break;
 
             case INIT_STATE_GENDER:
                 this.ble_InitState = BLE_RETRY_NUMBER;
                 this.ble_InitState = INIT_STATE_DATE_OF_BIRTH;
-                mBluetoothLeService.writeCustomCharacteristic(USER_DATA_SERVICE, PHONE_NUMBER_CHARAC, BigInteger.valueOf(gender).toByteArray());
+                mBluetoothLeService.writeCustomCharacteristic(USER_DATA_SERVICE, PHONE_NUMBER_CHARAC, phoneNumber);
                 break;
 
             case INIT_STATE_DATE_OF_BIRTH:
                 this.ble_InitState = BLE_RETRY_NUMBER;
                 this.ble_InitState = INIT_STATE_WEIGHT;
-                mBluetoothLeService.writeCustomCharacteristic(USER_DATA_SERVICE, WEIGHT_CHARAC, BigInteger.valueOf(weight).toByteArray());
+                mBluetoothLeService.writeCustomCharacteristic(USER_DATA_SERVICE, WEIGHT_CHARAC, weight);
                 break;
 
             case INIT_STATE_WEIGHT:
                 this.ble_InitState = BLE_RETRY_NUMBER;
                 this.ble_InitState = INIT_STATE_HEIGHT;
-                mBluetoothLeService.writeCustomCharacteristic(USER_DATA_SERVICE, HEIGHT_CHARAC, BigInteger.valueOf(height).toByteArray());
+                mBluetoothLeService.writeCustomCharacteristic(USER_DATA_SERVICE, HEIGHT_CHARAC, height);
                 break;
 
             case INIT_STATE_HEIGHT:
                 this.ble_InitState = BLE_RETRY_NUMBER;
                // mBluetoothLeService.writeCustomCharacteristic(USER_DATA_SERVICE, PHONE_NUMBER_CHARAC, BigInteger.valueOf(gender).toByteArray());
                 break;
+
 
             default:
                 Log.i("DeviceControlActivity", "Invalid BLE init state");
@@ -409,7 +413,7 @@ public class DeviceControlActivity extends Activity implements BluetoothLeListen
             // mBluetoothLeService.readCustomCharacteristic();
             UUID service = UUID.fromString("e4b83ca0-d191-11e4-90a5-0002a5d5c51b");
             UUID charac = UUID.fromString("00f45340-d192-11e4-a94a-0002a5d5c51b");
-            mBluetoothLeService.setCharacteristicNotification(service, charac, true);
+            mBluetoothLeService.setCharacteristicNotification(DEVICE_CONTROL_SERVICE, DEVICE_CONTROL_CHARAC, true);
 
 
         }

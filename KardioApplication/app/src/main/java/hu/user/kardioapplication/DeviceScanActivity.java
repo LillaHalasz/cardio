@@ -120,10 +120,10 @@ public class DeviceScanActivity extends ListActivity
                 if (state == BluetoothDevice.BOND_BONDED)
                 {
                     Log.d(TAG, "CALLBACK RECIEVED Bonded");
-                    final Intent startIntent = new Intent(getApplication(), DeviceControlActivity.class);
+          //          final Intent startIntent = new Intent(getApplication(), DeviceControlActivity.class);
 
 
-                    //   final Intent intent = new Intent(this, WalkingScreenActivity.class);
+                    final Intent startIntent = new Intent(getApplication(), WalkingScreenActivity.class);
                     startIntent.putExtra(DeviceControlActivity.EXTRAS_DEVICE_NAME, device.getName());
                     startIntent.putExtra(DeviceControlActivity.EXTRAS_DEVICE_ADDRESS, device.getAddress());
                     if (mScanning)
